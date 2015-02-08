@@ -5,7 +5,7 @@ namespace Valum {
 	 *
 	 * @since 0.2
 	 */
-	public interface Session {
+	public interface Session : GLib.Object {
 
 		/**
 		 * Tells if the session contains the given key.

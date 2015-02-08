@@ -277,17 +277,15 @@ app.scope ("session", (inner) => {
 		}
 	});
 	inner.delete ("", (req, res) => {
-		req.session = null;
+		var session = new NativeSession (req);
+		session.delete ();
 	});
-	inner.get ("<key>", (req, res) => {
-		if (req.session == null)
-			res.status = 404;
-		else if (req.session.contains (req.params["key"])) {
-			var writer = new DataOutputStream(res);
-			writer.put_string (req.params["key"]);
-		} else {
-			res.status = 404;
-		}
+	inner.post ("<key>", (req, res) => {
+		var session = new NativeSession (req);
+
+		var reader = new DataInputStream (req);
+
+		session.set (req.params["key"], reader.read_line ()).update ();
 	});
 	inner.post ("<key>", (req, res) => {
 		var session = req.session == null ? new HashTable<string, string> (str_hash, str_equal) : req.session;

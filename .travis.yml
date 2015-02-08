@@ -3,6 +3,9 @@ language: c
 compiler:
     - gcc
 
+services:
+    - memcached
+
 before_install:
     - sudo add-apt-repository --yes ppa:vala-team
     - sudo apt-get update --quiet

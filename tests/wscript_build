@@ -5,5 +5,5 @@ bld.program(
     target    = 'tests',
     source    = ['tests.vala'] + bld.path.ant_glob('**/test_*.vala'),
     use       = 'valum',
-    uselib    = ['GLIB', 'CTPL', 'GEE', 'SOUP', 'FCGI'],
+    uselib    = ['GLIB', 'CTPL', 'GEE', 'SOUP', 'FCGI', 'MEMCACHED'],
     vapi_dirs = ['../vapi'])

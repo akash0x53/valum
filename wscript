@@ -21,6 +21,9 @@ def configure(conf):
     conf.check_cfg(package='gee-0.8', atleast_version='0.6.4', mandatory=True, uselib_store='GEE', args='--cflags --libs')
     conf.check_cfg(package='libsoup-2.4', atleast_version='2.38', mandatory=True, uselib_store='SOUP', args='--cflags --libs')
 
+    # optional packages
+    conf.check_cfg(package='libmemcached', mandatory=False, uselib_store='MEMCACHED', args='--cflags --libs')
+
     # libfcgi does not provide a .pc file...
     conf.check(lib='fcgi', mandatory=True, uselib_store='FCGI', args='--cflags --libs')
 
@@ -30,7 +33,7 @@ def configure(conf):
 def build(bld):
     # build a static library
     bld.stlib(
-        packages    = ['glib-2.0', 'libsoup-2.4', 'gee-0.8', 'ctpl', 'fcgi'],
+        packages    = ['glib-2.0', 'libsoup-2.4', 'gee-0.8', 'ctpl', 'fcgi', 'libmemcached'],
         target      = 'valum',
         gir         = 'Valum-{}.{}'.format(*VERSION),
         source      = bld.path.ant_glob('src/**/*.vala'),

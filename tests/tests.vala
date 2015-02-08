@@ -14,6 +14,8 @@ public int main (string[] args) {
 	Test.add_func ("/valum/route/match/not_matching", test_valum_route_match_not_matching);
 	Test.add_func ("/valum/route/fire", test_valum_route_match_not_matching);
 
+	Test.add_func ("/cache/memcached", test_cache_memcached);
+
 	return Test.run ();
 }
 

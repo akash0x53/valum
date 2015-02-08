@@ -39,7 +39,7 @@ namespace Valum {
 		 *
 		 * @return builder
 		 */
-		public Cookies @set (string name, string @value, bool secure = false, int max_age = null) {
+		public Cookies @set (string name, string @value, bool secure = false, int max_age = 0) {
 			var uri    = request.uri;
 			var cookie = new Soup.Cookie (name, @value, uri.get_host (), uri.get_path (), max_age);
 

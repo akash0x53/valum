@@ -1,11 +1,9 @@
 using Valum;
 using VSGI;
 
-var app = new Router();
-var lua = new Script.Lua();
-var mcd = new NoSQL.Mcached();
-
-mcd.add_server("127.0.0.1", 11211);
+var app = new Router ();
+var lua = new Script.Lua ();
+var cache = new MemcachedCache ("127.0.0.1");
 
 // extra route types
 app.types["permutations"] = "abc|acb|bac|bca|cab|cba";
@@ -185,7 +183,7 @@ app.get("ctpl/streamed", (req, res) => {
 
 // memcached
 app.get("memcached/get/<key>", (req, res) => {
-	var value = mcd.get(req.params["key"]);
+	var value = cache.get(req.params["key"]);
 	var writer = new DataOutputStream(res);
 	writer.put_string(value);
 });
@@ -193,11 +191,8 @@ app.get("memcached/get/<key>", (req, res) => {
 // TODO: rewrite using POST
 app.get("memcached/set/<key>/<value>", (req, res) => {
 	var writer = new DataOutputStream(res);
-	if (mcd.set(req.params["key"], req.params["value"])) {
-		writer.put_string("Ok! Pushed.");
-	} else {
-		writer.put_string("Fail! Not Pushed...");
-	}
+	cache.set (req.params["key"], req.params["value"]);
+	writer.put_string ("Pushed %s into cache engine.".printf (req.params["value"]));
 });
 
 // FIXME: Optimize routing...

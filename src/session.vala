@@ -14,7 +14,7 @@ namespace Valum {
 		 *
 		 * @param string key
 		 */
-		public abstract bool contains (string key);
+		public abstract bool has_key (string key);
 
 		/**
 		 * Obtain the value associated to the given key.
@@ -31,6 +31,16 @@ namespace Valum {
 		 * @return builder
 		 */
 		public abstract Session @set (string key, string @value);
+
+		/**
+		 * Merge the given table into the session.
+		 *
+		 * Existing key are overwritten and missing are added.
+		 *
+		 * @param session session table to be merged into this session.
+		 * @return builder
+		 */
+		public abstract Session merge (HashTable<string, string> session);
 
 		/**
 		 * Remove a session key and its associated value.
